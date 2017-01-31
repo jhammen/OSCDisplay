@@ -1,0 +1,17 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+    <header
+        android:fragment="org.j2page.oscdisplay.SettingsActivity$NetworkPreferenceFragment"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="@string/pref_header_network" />
+
+    <header
+        android:fragment="org.j2page.oscdisplay.SettingsActivity$AddressesPreferenceFragment"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="@string/pref_header_addresses" />
+
+    <header
+        android:fragment="org.j2page.oscdisplay.SettingsActivity$TemplatesPreferenceFragment"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/pref_header_templates" />
+
+</preference-headers>
