@@ -2,7 +2,10 @@ package org.j2page.oscdisplay;
 
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -10,11 +13,16 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.util.AttributeSet;
 import android.util.Patterns;
+import android.util.Xml;
 import android.widget.Toast;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.util.List;
 
@@ -178,10 +186,44 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     public static class TemplatesPreferenceFragment extends PreferenceFragment {
 
+        private static final String KEY_PREF_TEMPLATE_PRELOAD = "key_template_preload";
+        private static final String KEY_PREF_TEMPLATE_PREDEF = "key_template_predef";
+        private static final String KEY_PREF_TEMPLATE_COUNT = "key_template_count";
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_templates);
+            Activity activity = getActivity();
+            PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(activity);
+
+            final SharedPreferences prefs = getDefaultSharedPreferences(activity);
+            final boolean preloaded = prefs.getBoolean(KEY_PREF_TEMPLATE_PRELOAD, false);
+            if (!preloaded) {
+                loadDefaultTemplates(prefs);
+            }
+
+            Resources resources = this.getResources();
+            @SuppressWarnings("ResourceType")
+            XmlPullParser parser = resources.getXml(R.layout.preference_template);
+            AttributeSet attributes = Xml.asAttributeSet(parser);
+
+            TemplatePreference tpref = new TemplatePreference(activity, attributes);
+            tpref.setTitle("User Template 1");
+            tpref.setSummary("click to edit");
+            tpref.setKey(KEY_PREF_TEMPLATE_PREDEF);
+            screen.addPreference(tpref);
+
+            Preference addPref = new Preference(activity);
+            addPref.setTitle("Add New Template");
+            addPref.setIcon(android.R.drawable.ic_menu_add);
+            screen.addPreference(addPref);
+            setPreferenceScreen(screen);
+        }
+
+        private void loadDefaultTemplates(SharedPreferences prefs) {
+            prefs.edit().putString(KEY_PREF_TEMPLATE_PREDEF, getText(R.string.default_template).toString())
+                    .putInt(KEY_PREF_TEMPLATE_COUNT, 1)
+                    .putBoolean(KEY_PREF_TEMPLATE_PRELOAD, true).apply();
         }
     }
 }
