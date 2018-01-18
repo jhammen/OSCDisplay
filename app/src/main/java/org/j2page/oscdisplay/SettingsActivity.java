@@ -208,7 +208,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             AttributeSet attributes = Xml.asAttributeSet(parser);
 
             TemplatePreference tpref = new TemplatePreference(activity, attributes);
-            tpref.setTitle("User Template 1");
+            tpref.setTitle("Debug Template");
             tpref.setSummary("click to edit");
             tpref.setKey(KEY_PREF_TEMPLATE_PREDEF);
             screen.addPreference(tpref);
@@ -221,7 +221,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
         private void loadDefaultTemplates(SharedPreferences prefs) {
-            prefs.edit().putString(KEY_PREF_TEMPLATE_PREDEF, getText(R.string.default_template).toString())
+            prefs.edit().putString(KEY_PREF_TEMPLATE_PREDEF, getText(R.string.template_debug).toString())
                     .putInt(KEY_PREF_TEMPLATE_COUNT, 1)
                     .putBoolean(KEY_PREF_TEMPLATE_PRELOAD, true).apply();
         }

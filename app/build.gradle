@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "org.j2page.oscdisplay"
         minSdkVersion 11
@@ -25,7 +25,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.x5dev:chunk-templates:3.2.4'
     compile 'com.illposed.osc:javaosc-core:0.3'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'

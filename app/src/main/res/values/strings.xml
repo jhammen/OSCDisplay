@@ -1,18 +1,5 @@
 <resources>
     <string name="app_name">OSCDisplay</string>
-    <string name="default_template" formatted="false">
-        <![CDATA[<html>
-            <body><b>{$path}</b><br />
-                received {$time}<br/>
-                {.if ($numargs) } arguments: {/if}
-                <ul>{% loop in $args as $arg  %}
-                    <li>{$arg}</li>
-                {% onEmpty %}
-                 (No arguments)
-                {% endloop %}</ul>
-            </body>
-        </html>]]>
-    </string>
     <string name="template_waiting" formatted="false">
         <![CDATA[
             <html>
@@ -37,6 +24,44 @@
             </html>
         ]]>
     </string>
+    <string name="template_debug" formatted="false">
+        <![CDATA[<html>
+        <head>
+        <style>
+            #argsDiv { display: none; }
+            #emptyDiv { display: none; }
+        </style>
+        <script>
+        function showMessage() {
+            document.getElementById(\'path\').textContent = Message.address();
+            document.getElementById(\'time\').textContent = Message.time();
+            var count = Message.numArgs();
+            if(count > 0) {
+                document.getElementById(\'numArgs\').textContent = count;
+                document.getElementById(\'argsDiv\').style.display = \'block\';
+                var argsList = document.getElementById(\'argsList\');
+                for(var i = 0; i < count; i++) {
+                    argsList.innerHTML += \'<li>\' + Message.arg(i) + \'</li>\';
+                }
+            } else {
+                document.getElementById(\'emptyDiv\').style.display = \'block\';
+            }
+        }
+        window.onload=showMessage;
+        </script>
+        </head>
+            <body><b><span id="path"></span></b><br />
+                received <span id="time"></span><br/>
+                <div id="argsDiv">
+                <span id="numArgs">&nbsp</span> arguments:
+                <ul id="argsList"></ul>
+                </div>
+                <div id="emptyDiv">
+                 (No arguments)
+                </div>
+            </body>
+        </html>]]>
+    </string>
     <string name="menu_settings">settings</string>
     <string name="title_activity_settings">Settings</string>
     12
@@ -48,6 +73,6 @@
     <string name="pref_default_port">9000</string>
     <string name="pref_title_multicast_on">Multicast Enabled</string>
     <string name="pref_title_multicast_ip">Multicast IP Address</string>
-    <string name="pref_default_multicast_ip">228.5.6.7</string>
+    <string name="pref_default_multicast_ip">224.5.6.7</string>
 
 </resources>
