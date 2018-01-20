@@ -62,6 +62,61 @@
             </body>
         </html>]]>
     </string>
+    <string name="template_song" formatted="false">
+        <![CDATA[
+        <html>
+        <head>
+        <style type="text/css">
+        #song { height: 20%; color: blue; font-size: 8vw; }
+        #part { height: 20%; color: green; font-size: 8vw;}
+        #counter { float: right; padding-right: 45vw; }
+        #next { height: 15%; color: blue; font-size: 5vw;}
+        #message { color: red; font-size: 5vw; }
+        </style>
+        <script>
+        function update() {
+            var path = Message.address();
+            if(path === \'/song/bar\') {
+                var songDiv = document.getElementById(\'song\');
+                songDiv.textContent = Message.arg(0);
+                var current = document.getElementById(\'current\');
+                current.textContent = Message.arg(1);
+                var count = document.getElementById(\'count\');
+                var countArg = Message.arg(2);
+                count.textContent = countArg;
+                var length = document.getElementById(\'length\');
+                var lenArg = Message.arg(3);
+                length.textContent = lenArg;
+                var counter = document.getElementById(\'counter\');
+                var countColor = (lenArg - countArg < 3) ? \'red\' : \'green\';
+                counter.style.color = countColor;
+                var next = document.getElementById(\'nextPart\');
+                next.textContent = Message.arg(4);
+            } else if(path === \'/song/message\') {
+                var message = document.getElementById(\'message\');
+                message.textContent = Message.arg(0);
+                setTimeout(function() {
+                    message.textContent = \'\';
+                }, 5000);
+            }
+        }
+        window.onload=update;
+        </script>
+        </head>
+        <body>
+        <div id="song"></div>
+        <div id="part">
+            <span id="current"></span>
+            <span id="counter">
+                <span id="count"></span>/<span id="length"></span>
+            </span>
+        </div>
+        <div id="next">Next: <span id="nextPart"></span></div>
+        <div id="message"></div>
+        </body>
+        </html>
+        ]]>
+    </string>
     <string name="menu_settings">settings</string>
     <string name="title_activity_settings">Settings</string>
     12

@@ -26,6 +26,12 @@ public class OscDisplayApplication extends Application {
         Template debugTemplate = new Template();
         debugTemplate.setBody(getString(R.string.template_debug));
         allPaths.add(new Path("/debug", debugTemplate));
+
+        // default song template
+        Template songTemplate = new Template();
+        songTemplate.setBody(getString(R.string.template_song));
+        allPaths.add(new Path("/song/bar", songTemplate, true));
+        allPaths.add(new Path("/song/message", songTemplate, true));
     }
 
     public List<Path> getAllPaths() {
